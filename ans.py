@@ -14,8 +14,9 @@ def isPrime(num1):
 
 
 t = int(input())
-for i in range(t):
+for _  in range(t):
     n = int(input())
+
     if isPrime(n):
         print("Prime")
     else:

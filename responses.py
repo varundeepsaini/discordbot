@@ -197,8 +197,6 @@ def fetch_hackerearth_rating(handle):
 
 
 def fetch_codeforces_rating(handle):
-    key = "55a7ead37ecd2c05638ba610904447ca89355182"
-    secret = "2da790eaef6101a47d284561e1b0c743349d8121"
     url = f"https://codeforces.com/api/user.info?handles={handle}"
     response = requests.get(url)
     formatted_response = response.json()
