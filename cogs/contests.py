@@ -97,7 +97,7 @@ class contests(commands.Cog):
 
             response.add_field(name=field_name, value=field_value, inline=False)
 
-        await ctx.send(embed=response)
+        await ctx.respond(embed=response)
 
 
 def setup(bot: commands.Bot):
