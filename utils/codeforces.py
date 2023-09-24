@@ -1,50 +1,50 @@
-from codeforces_api import CodeforcesApi
-from requests import get
-
-cf_api = CodeforcesApi()
-
-
-def has_successful_submission(user_data, contest_id, problem_index):
-    for submission in user_data["result"]:
-        if (
-            submission["verdict"] == "OK"
-            and submission["problem"]["contestId"] == contest_id
-            and submission["problem"]["index"] == problem_index
-        ):
-            return True
-
-    return False
-
-
-def get_contest_standings(contest_id):
-    request_url = f"https://codeforces.com/api/contest.standings?contestId={contest_id}"
-    response = get(request_url)
-    response = response.json()
-    return response
+import requests
 
 
 def getTwoProblems(username, rating):
-    final_problems = [0, 0]
+    rounded_rating = round(rating / 100) * 100
+    higher_rating = rounded_rating + 200
 
-    url = f"https://codeforces.com/api/user.status?handle={username}"
-    response = get(url)
-    user_data = response.json()
+    submissions_url = (
+        f"https://codeforces.com/api/user.status?handle={username}&from=1&count=1000000"
+    )
+    response = requests.get(submissions_url)
+    data = response.json()
+    if data["status"] != "OK":
+        return []
 
-    for contest in cf_api.contest_list():
-        standings = get_contest_standings(contest.id)
-        if standings["status"] == "OK":
-            for problem in standings["result"]["problems"]:
-                if final_problems[0] != 0 and final_problems[1] != 0:
-                    return final_problems
-                if "rating" in problem and not has_successful_submission(
-                    user_data, contest.id, problem["index"]
-                ):
-                    if final_problems[0] != 0 and problem["rating"] == rating:
-                        final_problems[0] = problem
-                    if final_problems[1] != 0 and problem["rating"] == rating + 200:
-                        final_problems[1] = problem
+    solved_problems = set()
+    for submission in data["result"]:
+        if submission["verdict"] == "OK":
+            problem_id = (
+                submission["problem"]["contestId"],
+                submission["problem"]["index"],
+            )
+            solved_problems.add(problem_id)
 
-    return final_problems
+    problems_url = "https://codeforces.com/api/problemset.problems"
+    response = requests.get(problems_url)
+    data = response.json()
+    if data["status"] != "OK":
+        return []
 
+    selected_problems = []
+    for problem in data["result"]["problems"]:
+        if "rating" not in problem:
+            continue
+        if (
+            problem["rating"] == rounded_rating
+            and (problem["contestId"], problem["index"]) not in solved_problems
+        ):
+            selected_problems.append(problem)
+            if len(selected_problems) == 2:
+                break
+        elif (
+            problem["rating"] == higher_rating
+            and (problem["contestId"], problem["index"]) not in solved_problems
+        ):
+            selected_problems.append(problem)
+            if len(selected_problems) == 2:
+                break
 
-print(getTwoProblems("probablyarth", 800))
+    return selected_problems

@@ -17,12 +17,16 @@ async def on_ready():
 
 
 @bot.command(description="register for daily cp questions")
-async def register(ctx: ApplicationContext):
+async def register(ctx: ApplicationContext, username: str):
     if user_collection.find_one({"discord_id": ctx.author.id}) is not None:
         await ctx.respond(f"Already Registered")
         return
     user_collection.insert_one(
-        {"discord_id": ctx.author.id, "discord_username": ctx.author.name}
+        {
+            "discord_id": ctx.author.id,
+            "discord_username": ctx.author.name,
+            "username": username,
+        }
     )
     await ctx.respond("Registered!")
 
