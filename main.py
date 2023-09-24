@@ -1,5 +1,6 @@
 from discord import ApplicationContext, Bot
 from utils.env import DISCORD_BOT_TOKEN
+from utils.mongo import user_collection
 import os
 
 bot = Bot()
@@ -13,6 +14,21 @@ async def ping(ctx: ApplicationContext):
 @bot.event
 async def on_ready():
     print(f"Saini Certified is online.")
+
+
+@bot.command(description="register for daily cp questions")
+async def register(ctx: ApplicationContext, username: str):
+    if user_collection.find_one({"discord_id": ctx.author.id}) is not None:
+        await ctx.respond(f"Already Registered")
+        return
+    user_collection.insert_one(
+        {
+            "discord_id": ctx.author.id,
+            "discord_username": ctx.author.name,
+            "username": username,
+        }
+    )
+    await ctx.respond("Registered!")
 
 
 for filename in os.listdir("./cogs"):
