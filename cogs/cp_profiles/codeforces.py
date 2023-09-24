@@ -60,12 +60,12 @@ class codeforces(commands.Cog):
             print("Failed to decode JSON data from API response.")
             return
         if data["status"] == "FAILED":
-            await ctx.send("Invalid username")
+            await ctx.respond("Invalid username")
             return
         else:
             embed = codeforces_embed(data["result"][0])
 
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
 
 
 def setup(bot: commands.Bot):

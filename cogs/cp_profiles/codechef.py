@@ -50,10 +50,10 @@ class codechef(commands.Cog):
         """
         if formatted_response["success"]:
             embed = codechef_embed(formatted_response, handle)
-            await ctx.send(embed=embed)
+            await ctx.respond(embed=embed)
             return
         else:
-            await ctx.send("Invalid username")
+            await ctx.respond("Invalid username")
 
 
 def setup(bot: commands.Bot):
