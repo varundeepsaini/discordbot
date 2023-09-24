@@ -4,17 +4,23 @@ import requests
 
 
 def codechef_embed(formatted_response, handle: str):
-    name = formatted_response['name']
-    rating = formatted_response['currentRating']
-    max_rating = formatted_response['highestRating']
-    stars = formatted_response['stars'][:1]
-    global_rank = formatted_response['globalRank']
-    country_rank = formatted_response['countryRank']
+    name = formatted_response["name"]
+    rating = formatted_response["currentRating"]
+    max_rating = formatted_response["highestRating"]
+    stars = formatted_response["stars"][:1]
+    global_rank = formatted_response["globalRank"]
+    country_rank = formatted_response["countryRank"]
     profile_url = f"https://www.codechef.com/users/{handle}"
 
-    embed = Embed(title="Codechef Profile", description="Here is your Codechef Profile.", color=0x00ff00)
+    embed = Embed(
+        title="Codechef Profile",
+        description="Here is your Codechef Profile.",
+        color=0x00FF00,
+    )
     embed.add_field(name="Name", value=name, inline=False)
-    embed.add_field(name="Handle", value=f"[{handle}]({profile_url})", inline=False)  # hyperlink the handle
+    embed.add_field(
+        name="Handle", value=f"[{handle}]({profile_url})", inline=False
+    )  # hyperlink the handle
     embed.add_field(name="Rating", value=rating, inline=False)
     embed.add_field(name="Max Rating", value=max_rating, inline=False)
     embed.add_field(name="Stars", value=stars, inline=False)
@@ -42,7 +48,7 @@ class codechef(commands.Cog):
         'https://cdn.codechef.com/download/flags/24/in.png', 'countryName': 'India', 'globalRank': 66569, 'countryRank': 
         61804, 'stars': '1★'}
         """
-        if formatted_response['success']:
+        if formatted_response["success"]:
             embed = codechef_embed(formatted_response, handle)
             await ctx.send(embed=embed)
             return
