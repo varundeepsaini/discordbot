@@ -37,7 +37,7 @@ For each feature, bug fix, or improvement, create a separate branch. This makes 
 
 ### 4. Follow Coding Standards
 
-Adhere to the project's coding standards and style guidelines. If there are specific conventions or formatting rules, make sure your code complies with them.
+Adhere to the project's [coding standards and style guidelines](CODE_STYLE.md).
 
 ### 5. Write Good Commit Messages
 
