@@ -3,3 +3,4 @@ from os import environ
 
 load_dotenv()
 DISCORD_BOT_TOKEN = environ.get("DISCORD_BOT_TOKEN")
+MONGO_URI = environ.get("MONGO_URI")
