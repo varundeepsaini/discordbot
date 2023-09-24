@@ -10,7 +10,7 @@ def getLeetCodeEmbed(username: str) -> Embed | None:
     data = response.json()
     embed = Embed(title=username, color=0x00ff00)
     embed.set_author(name="LeetCode", icon_url="https://www.google.com/url?sa=i&url=https%3A%2F%2Fleetcode.com%2F&psig=AOvVaw1bZXtsAts5pg_h6It7I9kX&ust=1695556446675000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCOi11o_WwIEDFQAAAAAdAAAAABAE")
-    embed.add_field(name="Handle", value=f"[{username}]({profile_url})", inline=False)  # hyperlink the handle
+    embed.add_field(name="Handle", value=f"[{username}]({profile_url})", inline=False)
     embed.add_field(name="Ranking", value=data['ranking'], inline=False)
     embed.add_field(name="Total Solved", value=f"{data['totalSolved']} / {data['totalQuestions']}", inline=False)
     embed.add_field(name="Percentage Solved", value=f"{round(100 * data['totalSolved'] / data['totalQuestions'], 2)}%", inline=False)
@@ -22,7 +22,6 @@ def getLeetCodeEmbed(username: str) -> Embed | None:
     embed.add_field(name="Percentage Hard Solved", value=f"{round(100 * data['hardSolved'] / data['totalHard'], 2)}%", inline=False)
     embed.add_field(name="Acceptance Rate", value=f"{data['acceptanceRate']}%", inline=False)
     return embed
-        
         
 class LeetCode(commands.Cog):
 
