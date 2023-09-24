@@ -12,7 +12,9 @@ def getLeetCodeEmbed(username: str) -> Embed | None:
     embed = Embed(title=username, color=0x00FF00)
     embed.set_author(
         name="LeetCode",
-        icon_url="https://www.google.com/url?sa=i&url=https%3A%2F%2Fleetcode.com%2F&psig=AOvVaw1bZXtsAts5pg_h6It7I9kX&ust=1695556446675000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCOi11o_WwIEDFQAAAAAdAAAAABAE",
+        icon_url="https://www.google.com/url?sa=i&url=https%3A%2F%2Fleetcode.com%2F&psig=AOvVaw1bZXtsAts5pg_h6It7I9kX"
+        "&ust=1695556446675000&source=images&cd=vfe&opi=89978449&ved"
+        "=0CBAQjRxqFwoTCOi11o_WwIEDFQAAAAAdAAAAABAE",
     )
     embed.add_field(name="Handle", value=f"[{username}]({profile_url})", inline=False)
     embed.add_field(name="Ranking", value=data["ranking"], inline=False)
